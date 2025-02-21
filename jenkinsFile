@@ -1,0 +1,42 @@
+pipeline{
+    agent any
+    tools{
+        maven "My desktop maven"
+    }
+    stages{
+
+        stage("SCM checkout"){
+        steps{
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/saiteja220895/ticket-booking-demo.git']])
+        }
+        }
+        stage("Build process"){
+            steps{
+                script{
+                    sh 'mvn clean install'
+                }
+            }
+        }
+        stage("Deplot to container"){
+            steps{
+                deploy adapters: [tomcat9(credentialsId: 'ticketBooking', path: '', url: 'http://localhost:9090/')], contextPath: 'ticketBooking', war: '**/*.war'
+            }
+        }
+    }
+    post{
+        always{
+            emailext attachLog: true,
+        body: """<html>
+        <body>
+            <p><b>Build Status:</b> ${currentBuild.result}</p>
+            <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+            <p><b>Check the Console Output:</b> <a href="${env.BUILD_URL}">Click Here</a></p>
+        </body>
+        </html>""",
+        mimeType: 'text/html',
+        subject: "Pipeline Status: ${env.BUILD_NUMBER}",
+        to: 'saiteja2208@gmail.com'        }
+    }
+
+
+}
