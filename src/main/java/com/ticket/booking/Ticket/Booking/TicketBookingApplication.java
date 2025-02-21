@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
-
+@SpringBootApplication
 public class TicketBookingApplication {
 
 	public static void main(String[] args) {
@@ -37,16 +37,7 @@ public class TicketBookingApplication {
 			System.out.println("7. Exit the app");
 			option = scanner.nextInt();
 			switch (option){
-				case 1:
-					System.out.println("Enter the username to signup");
-					String nameToSignUp = scanner.next();
-					System.out.println("Enter the password to signup");
-					String passwordToSignUp = scanner.next();
-					User userToSignUp = new User(nameToSignUp, passwordToSignUp,
-							UserServiceUtil.hashPassword(passwordToSignUp),
-							new ArrayList<>(), UUID.randomUUID().toString());
-					userBookingService.signUp(userToSignUp);
-					break;
+
 
 				case 2:
 					System.out.println("Enter the username to login");
