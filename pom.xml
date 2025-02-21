@@ -11,6 +11,7 @@
 	<groupId>com.ticket.booking</groupId>
 	<artifactId>Ticket-Booking</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>Ticket-Booking</name>
 	<description>Demo project for Ticket Booking</description>
 	<url/>
